@@ -1,0 +1,12 @@
+**/*.gdx
+**/*.lst
+**/*.lxi
+**/*.xlsx
+**/*.log
+**/*.pf
+**/*.txt
+**/mcpmod.gms
+**/225*/*
+**/*.sublime-workspace
+**/*.jams
+**/*.par
