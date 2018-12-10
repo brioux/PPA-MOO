@@ -1,5 +1,5 @@
 
-marginal_cost = (ci*(1-l0) + l0*cl) ;
+marginal_cost = (ci*(1-l0) + l0*cl+(y_bar-y0)*tau_c) ;
 fixed_cost = fi*(1-l0) + l0*fl+y0*tau_f+v*h0;
 
 delta0 = fixed_cost;

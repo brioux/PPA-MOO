@@ -139,7 +139,7 @@ EQ_norm
 /;
 
 file myinfo /'%emp.info%'/;
-put myinfo 'DualVar w_E(t) EQ_E_s';
+put 'DualVar w_E(t) EQ_E_s';
 put 'DualVar w_y EQ_y_s';
 put 'DualVar w_l EQ_l_s';
 put 'DualVar w_delta EQ_delta_s';

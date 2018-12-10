@@ -22,7 +22,7 @@ cost_gen = sum(t,Q.l(t)*c.l(t))+delta.l*sum(t,f.l(t));
 CS =sum(t,( (E_bar - E.l(t))*Q.l(t) + (delta_bar - delta.l)*K.l )/(1+i)**ord(t) );
 
 Pi = sum(t,(  (E.l(t)- c.l(t))*Q.l(t) + (delta.l - f.l(t))*K.l  )/(1+i)**(ord(t))) ;
-Display E.l,l.l,delta.l,z.l,h.l,y.l,CS,Pi,w_l.l,w_E.l,w_delta.l,w_h.l,w_y.l,Q.l,theta.l
+Display E.l,l.l,delta.l,z.l,h.l,y.l,CS,Pi,w_l.l,w_E.l(t),w_delta.l,w_h.l,w_y.l,Q.l,theta.l
 *w_theta
 ;
 
