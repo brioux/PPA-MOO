@@ -184,10 +184,19 @@ Order=
 Decim=7
 PlaneRownr=-1
 
-[RP:WEIGHTS]
+[RP:3_4_2_2]
+1=
+
+[RP:3_4_2_6]
+1=
+
+[RP:3_4_2_8]
 1=
 
 [RP:ENERGY_CAPACITY_PRICES]
+1=
+
+[RP:WEIGHTS]
 1=
 
 [RP:PPA MODEL]
@@ -195,20 +204,23 @@ PlaneRownr=-1
 2=
 
 [MRUFILES]
-1=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.lst
-2=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
-3=C:\Users\willbj0b\github\PPA-MOO\zz.gdx
-4=D:\Dropbox (KAPSARC)\Market with no residual supplier\20181112_modified_OPEX.gdx
+1=C:\Users\willbj0b\github\PPA-MOO\weights.lst
+2=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.lst
+3=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
+4=C:\Users\willbj0b\github\KEM_CMO\3_4_2_8.gms
+5=C:\Users\willbj0b\github\KEM_CMO\3_4_2_6.gms
+6=C:\Users\willbj0b\github\KEM_CMO\3_4_2_2.gms
+7=C:\Users\willbj0b\github\PPA-MOO\zz.gdx
+8=D:\Dropbox (KAPSARC)\Market with no residual supplier\20181112_modified_OPEX.gdx
 
 [OPENWINDOW_1]
 FILE0=C:\Users\willbj0b\github\KOMNRS\build\data\tables.gdx
 FILE1=C:\Users\willbj0b\github\PPA-MOO\PPA model.gms
 FILE2=C:\Users\willbj0b\github\PPA-MOO\PPA model.lst
 FILE3=C:\Users\willbj0b\github\PPA-MOO\weights.gms
-FILE4=C:\Users\willbj0b\github\PPA-MOO\weights.lst
-FILE5=C:\Users\willbj0b\github\PPA-MOO\PPA model.lst
+FILE4=C:\Users\willbj0b\github\PPA-MOO\PPA model.lst
 MAXIM=0
-TOP=6
-LEFT=55
+TOP=-12
+LEFT=45
 HEIGHT=564
 WIDTH=1164
