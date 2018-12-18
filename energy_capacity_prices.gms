@@ -1,8 +1,17 @@
+* calaculate cl,fl such that they are the fixed cost under 100% of local content
+cl = (cl -ci*(1-l0))/l0 ;
+fl = (fl -fi*(1-l0))/l0 ;
+
+* 10% increase in fixed/capital cost at targeted financial strength.
+v = (fi*(1-l0) + l0*fl)*0.1/h0;
+*1% cost slippage for each year of experience.
+tau_f = (fi*(1-l0) + l0*fl)*0.01;
+
 
 marginal_cost = (ci*(1-l0) + l0*cl) ;
 fixed_cost = fi*(1-l0) + l0*fl+y0*tau_f+v*h0;
 
-delta0 = fixed_cost*1.2;
+delta0 = fixed_cost*delta_mark_up;
 delta_min = fixed_cost;
 delta_max = fixed_cost+marginal_cost*(theta0 - eps_L*l0 +eps_h*h0)*8.76;
 delta_alpha = 1;

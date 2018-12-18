@@ -4,7 +4,6 @@
           Shadow_h = EQ_h_s.m ;
           Shadow_y = EQ_y_s.m ;
 *          Shadow_theta = sum(t,EQ_5_6.m(t))/card(t);
-
 Shadow_Sum = sum(t,Shadow_E(t))/card(t) + Shadow_delta + Shadow_l +Shadow_h + Shadow_y
 *+Shadow_theta
 ;
@@ -44,6 +43,9 @@ Q.l(t) = a-b*E.l(t);
 K.l = K0-g*delta.l;
 c.l(t) = ci*(1-l.l) + l.l*cl;
 f.l(t) = fi*(1-l.l) + l.l*fl+y.l*tau_f+v*h.l ;
+theta.l(t) =e= theta0 - eps_L*l.l +eps_h*h.l;
+
+
 cost_ppa = sum(t,Q.l(t)*E.l(t))+delta.l*K.l;
 cost_gen = sum(t,Q.l(t)*c.l(t))+delta.l*sum(t,f.l(t));
 

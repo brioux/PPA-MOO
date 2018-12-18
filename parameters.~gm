@@ -1,4 +1,4 @@
-
+option nlp=pathnlp;
 
 Sets       j     companies /1*1/
            t     Time     /1*1/
