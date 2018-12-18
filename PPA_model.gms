@@ -1,87 +1,33 @@
 
+$include parameters.gms
 
-option nlp=pathnlp;
-
-Sets       j     companies /1*1/
-           t     Time     /1*1/
-           ;
-parameters
-            a            Intercept of the CDF of the uniform dist/1/
-            b            slope of the CDF of the uniform dist/1/
-            r_max        Highest possible ranking/5/
-            r_min        Lowest possible ranking/1/
-            l0           percentage of local content/0.3/
-            l_min,l_max,l_avg,l_std,l_alpha,l_beta
-
-            E0           the target price of electricity ($ per Mwh) /16/
-            E_bar        The maximum price of electricity USD per MWh /100/
-            E_min,E_max,E_avg,E_std,E_alpha,E_beta
-
-            delta0       the target capacity price ($ per KW)       /145/
-            delta_bar    The maximum price of capacity USD per KW /150/
-            delta_min,delta_max,delta_avg,delta_std,delta_alpha,delta_beta
-            g           slope on the capacity equation
-
-            K0           the installed capacity  kw /3.93e6/
-
-            theta0        /0.7 /
-            theta_bar     /0.6 /
-            theta_min,theta_max,theta_avg,theta_std,theta_alpha,theta_beta
-
-            y0           minimum years of experience /5/
-            y_bar        the targeted number of years of experience/10/
-            y_min,y_max,y_avg,y_std,y_alpha,y_beta
-
-            h0           minimum financial strength factor /0.75/
-            h_min,h_max,h_avg,h_std,h_alpha,h_beta
-
-            v            factor for the increase of project costs due to higher financial strength
-
-            tau_c        the impact of the number of years of lack of experience on cost slippage
-            tau_f        the impact of the number of years of lack of experience on cost slippage
-
-            eps_l        /0.05/
-            eps_y        /0.005/
-            eps_h        /0.01/
-
-            i            discount rate   /0.05 /
-
-            ci           International marginal cost $ per Mwh /15/
-            cl           100% local content marginal cost $ per Mwh /15/
-            fi           annualized capital cost of equipment USD per KW (CCGT)/188/
-            fl           domestic capital cost of equipment USD per KW (CCGT) /188/
-
-            pi_min       minimum profit /1000/
-
-            wE
-            wD
-            wH
-            wL
-            wY
-;
-
-a = - r_min/(r_max- r_min) ;
-b = 1/(r_max -r_min) ;
-
-Variables z2,z, E(t),Q(t), delta,c(t),o(t),f(t),l,K,theta(t) ;
-variables h,y ;
+Variables z,z_buyer,E(t),Q(t),delta,c(t),f(t),l,K,theta(t),h,y ;
 
 
 Positive variables
-      E,Q,delta,o,f,c,l,K,theta,
+      E,Q,delta,f,c,l,K,theta,
       h,y,
-      w_E(t),w_delta,w_l,w_h,w_y
+      w_E(t)            weight on energy price target
+      w_delta           weight on capacity price target
+      w_l               weight on local content target
+      w_h               weight on financial warranties
+      w_y               weight on years of experience
+      rho(t)
+      phi(t)
+      w_total
 ;
 Equations
 
-EQ_theta(t)
-Eq_Q(t)
-EQ_p(t)
-EQ_K
-EQ3(t)
-EQ4(t)
-
 EQ_profit
+EQ_theta(t)
+EQ_caplim(t)
+EQ_Q(t)
+EQ_K
+EQ_costv(t)
+EQ_costf(t)
+
+
+EQ_buyer
 EQ_E_s(t)
 EQ_delta_s
 EQ_l_s
@@ -91,62 +37,110 @@ EQ_h_s
 EQ_y_s
 
 EQ_norm
+
+EQ_rho(t)
+EQ_phi(t)
 ;
 
 
-EQ3(t)..      c(t) =e= ci*(1-l) + l*cl;
-EQ4(t)..      f(t) =e= fi*(1-l) + l*fl+y*tau_f+v*h;
+EQ_costv(t)..      c(t) =e= ci*(1-l) + l*cl;
+EQ_costf(t)..      f(t) =e= fi*(1-l) + l*fl+y*tau_f+v*h;
 
 EQ_theta(t)..     theta(t) =e= theta0 - eps_L*l +eps_h*h;
 
-Eq_Q(t)..       Q(t) =e= theta(t)*K*8.760;
+EQ_caplim(t)..       a-b*E(t) =l= (theta0 - eps_L*l +eps_h*h)*K*8.760;
 
-EQ_profit..     z =e= sum(t,(  (E(t)- c(t))*Q(t) + (delta-(f(t)))*K  )/(1+i)**(ord(t)));
+EQ_profit..     z =e= sum(t,1/(1+exp(-(w_E(t)*(E_avg-E(t))/E_std
+                        +w_delta*(delta_avg-delta)/delta_std
+                        -w_h*(h_avg-h)/h_std
+                        -w_l*(l_avg-l)/l_std
+                        -w_y*(y_avg-y)/y_std)))*(
+                        (E(t) - (ci*(1-l) + l*cl))*(a-b*E(t))+ (delta-(fi*(1-l) + l*fl+y*tau_f+v*h))*(K0-g*delta)
+                        ))
+;
+EQ_buyer..      z_buyer =e= +1*(
+                        (w_delta*(delta0-delta)/delta0)$(delta0>0)
+                        +sum(t,w_E(t)*(E0-E(t)))/E0
+                        +w_l*(l-l0)/l0
+                        +w_h*(h-h0)/h0
+                        +w_y*(y-y0)/y0)
+;
 
-EQ_E_s(t)..      (E(t)-E_avg)/E_std =l= (E0-E_avg)/E_std ;
-EQ_delta_s..         (delta-Delta_avg)/Delta_std =l= (delta0-Delta_avg)/Delta_std;
-EQ_l_s..         (l0-l_avg)/l_std =l= (l-l_avg)/l_std ;
-EQ_h_s..         (h0-h_avg)/h_std =l= (h-h_avg)/h_std  ;
-EQ_y_s..         (y0-y_avg)/y_std  =l= (y-y_avg)/y_std;
+EQ_E_s(t)..     (E(t)-E_avg)*E_std =l= (E0-E_avg)*E_std;
+EQ_delta_s..     (delta-delta_avg)/delta_std =l= (delta0-delta_avg)/delta_std;
+EQ_l_s..         -(l-l_avg)/l_std =l= -(l0-l_avg)/l_std;
+EQ_h_s..         -(h-h_avg)/h_std =l= -(h0-h_avg)/h_std;
+EQ_y_s..         -(y-y_avg)/y_std  =l= -(y0-y_avg)/y_std;
 
 EQ_norm(t).. w_y+w_l+w_E(t)+w_delta+w_h =e=1;
 
+EQ_rho(t).. rho(t) =e= 1/(1+exp(-phi(t)));
 
-EQ_p(t).. E(t) =e= a-b*Q(t);
+EQ_phi(t).. phi(t) =e=   w_E(t)*(E_avg-E(t))/E_std
+                        +w_delta*(delta_avg-delta)/delta_std
+                        -w_h*(h_avg-h)/h_std
+                        -w_l*(l_avg-l)/l_std
+                        -w_y*(y_avg-y)/y_std
+;
+
+EQ_Q(t).. Q(t) =e= a-b*E(t);
 EQ_K.. K =e= K0-g*delta;
 
 l.up = 1.0;
+h.up = 1.0;
+y.up = 10;
+
+*w_h.fx=1;
+*delta.fx=0;
 *E.up(t) = 200 ;
+
 *delta.up = 100 ;
 
-theta.lo(t) = 0.65
-Model PPA /
-
-EQ3,
-EQ4,
-EQ_theta,
-Eq_Q,
-EQ_profit,
-EQ_K
-
+*theta.lo(t) = 0.65
+Model buyer /
+EQ_buyer,
 EQ_E_s,
 EQ_delta_s,
 EQ_l_s,
 EQ_h_s,
 EQ_y_s,
-EQ_norm
-
+EQ_norm,
+*EQ_rho,
+*EQ_phi,
 /;
 
+model generator /
+*EQ_costv,
+*EQ_costf,
+*EQ_theta,
+EQ_caplim,
+EQ_profit,
+*EQ_K,
+*EQ_Q
+/
+
+model PPA /buyer generator/;
+
+PPA.optfile=1;
+PPA.savePoint=2;
+
 file myinfo /'%emp.info%'/;
-put myinfo 'DualVar w_E(t) EQ_E_s';
-put 'DualVar w_y EQ_y_s';
-put 'DualVar w_l EQ_l_s';
-put 'DualVar w_delta EQ_delta_s';
-put 'DualVar w_h EQ_h_s';
+put myinfo 'bilevel w_E w_delta w_h w_y w_l';
+put 'max z * ';
+put 'EQ_profit EQ_caplim '
+$ontext
+put 'EQ_E_s EQ_delta_s EQ_h_s EQ_y_s EQ_l_s';
+put 'dualvar w_E EQ_E_s ';
+put 'dualvar w_delta EQ_delta_s ';
+put 'dualvar w_h EQ_h_s ';
+put 'dualvar w_y EQ_y_s ';
+put 'dualvar w_l EQ_l_s ';
+$offtext
+
+*EQ_K EQ_costf EQ_costv EQ_theta
+*rho phi theta K Q c f
 putclose / myinfo;
-
-
+w_total.fx= 1;
 
 $macro mean(xmin,xmax,aa,bb) (aa*xmax+bb*xmin)/(aa+bb);
 $macro std(xmin,xmax,aa,bb) (xmax-xmin)*(aa*bb/((aa+bb+1)*(aa+bb)**2))**0.5;
@@ -201,8 +195,9 @@ l_std = std(l_min,l_max,l_alpha,l_beta);
 
 * //////////////////////////////////////////////////////////////////
 * scenario with low marginal cost/ energy price, high fixed cost and capacity price
-ci = 11.5;
+ci = 10.5;
 cl = 11.5;
+cl = (cl -ci*(1-l0))/l0 ;
 
 fi = 72.9;
 fl = 188;
@@ -215,11 +210,14 @@ v = (fi*(1-l0) + l0*fl)*0.1/h0;
 *1% cost slippage for each year of experience.
 tau_f = (fi*(1-l0) + l0*fl)*0.01;
 
-scalar E_mark_up markup on the energy price (amrginal revenue) /1.03/ ;
+scalar E_mark_up markup on the energy price /1.03/ ;
+
 $include energy_capacity_prices.gms
 
-Solve PPA using EMP maximizing z;
+Solve PPA using EMP maximizing z_buyer ;
 $include weights.gms
+
+*$ontext
 
 * //////////////////////////////////////////////////////////////////
 * new scenario with higher marignal production cost (fuel reforms)
@@ -234,18 +232,15 @@ fl=fl*0.3;
 
 v = (fi*(1-l0) + l0*fl)*0.1/h0;
 
-tau_c = (ci*(1-l0) + l0*cl)*0.01;
 tau_f = (fi*(1-l0) + l0*fl)*0.01;
 
 *E_mark_up = 1.0126;
 $include energy_capacity_prices.gms
 
-*theta.fx(t) = theta.l(t);
-
-Solve PPA using EMP maximizing z ;
+Solve PPA using EMP maximizing z_buyer ;
 $include weights.gms
 
-$exit
+*$offtext
 
 
 
