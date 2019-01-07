@@ -1,4 +1,4 @@
-option nlp=pathnlp;  
+option nlp=pathnlp;
 
 Variables z,z_buyer,E(t),Q(t),delta,c(t),f(t),l,K,theta(t),h,y ;
 Positive variables
@@ -17,7 +17,7 @@ Positive variables
 Equations
 EQ_profit         "generator's profit"
 EQ_theta(t)       utiliazation factor
-EQ_caplim(t)      generators capacity limit constraint      
+EQ_caplim(t)      generators capacity limit constraint
 
 EQ_buyer
 EQ_E_s(t)
@@ -44,33 +44,39 @@ EQ_caplim(t)..       a-b*E(t) =l= (theta0 - eps_L*l +eps_h*h)*K*8.760;
 EQ_profit..     z =e= sum(t,
 *                        rho(t)*
 *$ontext
-                        1/(1+exp(-(  
-                               w_E(t)*(E_avg-E(t))/E_std
-                              +w_delta*(delta_avg-delta)/delta_std
-                              -w_h*(h_avg-h)/h_std
-                              -w_l*(l_avg-l)/l_std
-                              -w_y*(y_avg-y)/y_std)) )*
-                        (
-*                         (E(t) - c(t))*Q(t) + (delta-f(t))*K
-                          (E(t) - (ci*(1-l) + l*cl))*(a-b*E(t))+ (delta-(fi*(1-l) + l*fl+y*tau_f+v*h))*(K0-g*delta)
-                        )
+  1/(1+exp(-(
+         +w_E(t)*(E_avg-E(t))/E_std
+*(1$(E_avg>E0)-1$(E_avg<=E0))
+        +w_delta*(delta_avg-delta)/delta_std
+*(1$(delta_avg>delta0)-1$(delta_avg<=delta0))
+        -w_h*(h_avg-h)/h_std
+*(1$(h_avg>h0)-1$(h_avg<=h0))
+        -w_l*(l_avg-l)/l_std
+*(1$(l_avg>l0)-1$(l_avg<=l0))
+        -w_y*(y_avg-y)/y_std
+*(1$(y_avg>y0)-1$(y_avg<=y0))
+        )))*
+  (
+*   (E(t) - c(t))*Q(t) + (delta-f(t))*K
+    (E(t) - (ci*(1-l) + l*cl))*(a-b*E(t))+ (delta-(fi*(1-l) + l*fl+y*tau_f+v*h))*(K0-g*delta)
+  )
 *$offtext
                   )
 ;
 
-EQ_buyer..      z_buyer =e= +1*(
+EQ_buyer..      z_buyer =e=
                         (w_delta*(delta0-delta)/delta0)$(delta0>0)
                         +sum(t,w_E(t)*(E0-E(t)))/E0
                         +w_l*(l-l0)/l0
                         +w_h*(h-h0)/h0
-                        +w_y*(y-y0)/y0)
+                        +w_y*(y-y0)/y0
 ;
 
-EQ_E_s(t)..     (E(t)-E_avg)*E_std =l= (E0-E_avg)*E_std;
-EQ_delta_s..     (delta-delta_avg)/delta_std =l= (delta0-delta_avg)/delta_std;
-EQ_l_s..         -(l-l_avg)/l_std =l= -(l0-l_avg)/l_std;
-EQ_h_s..         -(h-h_avg)/h_std =l= -(h0-h_avg)/h_std;
-EQ_y_s..         -(y-y_avg)/y_std  =l= -(y0-y_avg)/y_std;
+EQ_E_s(t)..     E(t)=l= E0   ;
+EQ_delta_s..     delta =l= delta0;
+EQ_l_s..         -l =l= -l0;
+EQ_h_s..         -h=l= -h0;
+EQ_y_s..         -y =l= -y0;
 
 EQ_norm(t).. w_y+w_l+w_E(t)+w_delta+w_h =e=1;
 
@@ -93,6 +99,9 @@ l.up = 1.0;
 h.up = 1.0;
 y.up = 10;
 
+*w_delta.lo = 0.1;
+*w_y.lo = 0.1;
+
 Model buyer /
 EQ_buyer,
 EQ_E_s,
@@ -113,8 +122,6 @@ EQ_profit,
 *EQ_theta,
 *EQ_K,
 *EQ_Q
-*EQ_rho,
-*EQ_phi,
 /
 
 model PPA /buyer generator/;
@@ -124,8 +131,8 @@ PPA.savePoint=2;
 
 file myinfo /'%emp.info%'/;
 put myinfo 'bilevel w_E w_delta w_h w_y w_l';
-put 'max z * ';
-put 'EQ_profit EQ_caplim'
+put 'max z E delta h y l';
+put 'EQ_profit EQ_caplim '
 $ontext
 put 'EQ_E_s EQ_delta_s EQ_h_s EQ_y_s EQ_l_s';
 put 'dualvar w_E EQ_E_s ';

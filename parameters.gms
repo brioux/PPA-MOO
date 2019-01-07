@@ -2,6 +2,8 @@
 
 Sets       j     companies /1*1/
            t     Time     /1*1/
+           scenario /high,low,volatility/
+           s(scenario)
            ;
 parameters
             a            Intercept of the CDF of the uniform dist/1/
@@ -38,8 +40,8 @@ parameters
             tau_c        the impact of the number of years of lack of experience on cost slippage
             tau_f        the impact of the number of years of lack of experience on cost slippage
 
-            eps_l        /0.05/
-            eps_h        /0.005/
+            eps_l        /0.1/
+            eps_h        /0.05/
 
             i            discount rate   /0.05 /
 
@@ -47,8 +49,7 @@ parameters
             cl           100% local content marginal cost $ per Mwh /15/
             fi           annualized capital cost of equipment USD per KW (CCGT)/188/
             fl           domestic capital cost of equipment USD per KW (CCGT) /188/
-
-
+            f0           reported captial cost
             Shadow_E(t)
             Shadow_delta
             Shadow_l

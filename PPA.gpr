@@ -838,6 +838,9 @@ Order=
 Decim=7
 PlaneRownr=-1
 
+[RP:PARAMETERS]
+1=
+
 [RP:WEIGHTS]
 1=
 
@@ -845,23 +848,26 @@ PlaneRownr=-1
 1=gdx=zz
 2=
 
+[RP:RUN]
+1=gdx=zz
+
 [MRUFILES]
-1=C:\Users\willbj0b\github\PPA-MOO\weights.gms
-2=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
-3=C:\Users\willbj0b\github\PPA-MOO\mcpmod.lst
-4=C:\Users\willbj0b\github\KOMNRS\mcpmod.gms
-5=C:\Users\willbj0b\AppData\Local\Microsoft\Windows\INetCache\Content.Outlook\R7BDT0AL\mcpmod.gms
-6=D:\Dropbox (KAPSARC)\ES- KEM\KEM_EMP\Management\KEM_EMP_simple.gms
-7=C:\Users\willbj0b\github\KOMNRS\build\data\tables.gdx
-8=C:\Users\willbj0b\github\PPA-MOO\PPA model.lst
+1=C:\Users\willbj0b\github\PPA-MOO\PPA_model.gms
+2=C:\Users\willbj0b\github\PPA-MOO\weights.gms
+3=C:\Users\willbj0b\github\PPA-MOO\weights.lst
+4=C:\Users\willbj0b\github\PPA-MOO\parameters.gms
+5=C:\Users\willbj0b\github\PPA-MOO\PPA_model.lst
+6=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
+7=C:\Users\willbj0b\github\PPA-MOO\mcpmod.lst
+8=C:\Users\willbj0b\github\KOMNRS\mcpmod.gms
 
 [OPENWINDOW_1]
-FILE0=C:\Users\willbj0b\github\PPA-MOO\PPA_model.gms
-FILE1=C:\Users\willbj0b\github\PPA-MOO\PPA_model.lst
+FILE0=C:\Users\willbj0b\github\PPA-MOO\run.gms
+FILE1=C:\Users\willbj0b\github\PPA-MOO\run.lst
 FILE2=C:\Users\willbj0b\github\PPA-MOO\zz.gdx
-FILE3=C:\Users\willbj0b\github\PPA-MOO\PPA_model.gms
+FILE3=C:\Users\willbj0b\github\PPA-MOO\run.lst
 MAXIM=0
-TOP=42
-LEFT=35
-HEIGHT=399
+TOP=-7
+LEFT=20
+HEIGHT=521
 WIDTH=1273
