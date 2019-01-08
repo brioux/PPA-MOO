@@ -47,6 +47,7 @@ parameters
 
             ci           International marginal cost $ per Mwh /15/
             cl           100% local content marginal cost $ per Mwh /15/
+            c0
             fi           annualized capital cost of equipment USD per KW (CCGT)/188/
             fl           domestic capital cost of equipment USD per KW (CCGT) /188/
             f0           reported captial cost

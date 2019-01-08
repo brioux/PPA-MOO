@@ -12,16 +12,16 @@ $include distributions.gms
 
 $include PPA_model.gms
 
-scalar E_mark_up markup on the energy price /1.05/
-       delta_mark_up markup on the capacity price /1.05/
+scalar E_mark_up markup on the energy price /1.07/
+       delta_mark_up markup on the capacity price /1.07/
 ;
 
 s(scenario) = no;
 s("high") = yes;
 * //////////////////////////////////////////////////////////////////
 * scenario with low marginal cost/ energy price, high fixed cost and capacity price
-ci = 10.5;
-cl = 11.5;
+ci = 10.67;
+c0 = ci*1.05;
 fi = 72.9;
 f0 = 188;
 
@@ -40,7 +40,7 @@ s("low") = yes;
 * We reduce investment cost under 100% local content to 30% of the value calaculted above.
 * The targeted capital/fixed cost at 20% local content
 ci = 28.2;
-cl = 28.2;
+c0 = ci*1.05;
 f0=f0*0.5;
 
 *E_mark_up = 1.0126;
@@ -58,10 +58,8 @@ s("volatility") = yes;
 * and discounted capital cost.
 * We reduce investment cost under 100% local content to 30% of the value calaculted above.
 * The targeted capital/fixed cost at 20% local content
-ci = 28.2;
-cl = 28.2;
-E_alpha = 4;
-E_beta = 4;
+E_alpha = 5;
+E_beta = 5;
 
 
 *E_mark_up = 1.0126;

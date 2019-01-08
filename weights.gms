@@ -84,6 +84,14 @@ report(s,"w_y") = w_y.l;
 report(s,"PPA cost") = cost_ppa;
 report(s,"Generator cost") = cost_gen;
 report(s,"profit") = sum(t,(E.l(t)- c.l(t))*Q.l(t) + (delta.l - f.l(t))*K.l);
+report(s,"Production") = Q.l('1');
+report(s,"Capacity") = K.l;
+report(s,"Energy price") = E.l('1');
+report(s,"Capacity price") = delta.l;
+report(s,"a") = a;
+report(s,"b") = b;
+report(s,"g") = g;
+report(s,"K0") = k0;
 *CS =sum(t,( (E_bar - E.l(t))*Q.l(t) + (delta_bar - delta.l)*K.l )/(1+i)**ord(t) );
 ;
 

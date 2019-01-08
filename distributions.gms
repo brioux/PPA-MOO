@@ -31,8 +31,8 @@ l_avg = mean(l_min,l_max,l_alpha,l_beta);
 l_std = std(l_min,l_max,l_alpha,l_beta);
 
 
-delta_alpha = 6;
-delta_beta = 6;
+delta_alpha = 5;
+delta_beta = 5;
 
 E_alpha = 10;
-E_beta = 10;
+E_beta =10;

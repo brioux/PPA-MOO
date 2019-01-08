@@ -841,33 +841,106 @@ PlaneRownr=-1
 [RP:PARAMETERS]
 1=
 
-[RP:WEIGHTS]
-1=
+[GDXDISP: E_min Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: delta_mark_up Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: delta_min Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: delta_max Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: cost_ppa Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
 
 [RP:PPA_MODEL]
 1=gdx=zz
 2=
+
+[GDXDISP: fixed_cost Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: report Par 2]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=2,1
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: scenario Set 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: results Par 3]
+PlaneDim=1
+RowDim=1
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=1
+PlaneFilter1=low
+
+[RP:WEIGHTS]
+1=
 
 [RP:RUN]
 1=gdx=zz
 
 [MRUFILES]
 1=C:\Users\willbj0b\github\PPA-MOO\PPA_model.gms
-2=C:\Users\willbj0b\github\PPA-MOO\weights.gms
+2=C:\Users\willbj0b\github\PPA-MOO\PPA_model.lst
 3=C:\Users\willbj0b\github\PPA-MOO\weights.lst
 4=C:\Users\willbj0b\github\PPA-MOO\parameters.gms
-5=C:\Users\willbj0b\github\PPA-MOO\PPA_model.lst
-6=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
-7=C:\Users\willbj0b\github\PPA-MOO\mcpmod.lst
-8=C:\Users\willbj0b\github\KOMNRS\mcpmod.gms
+5=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
+6=C:\Users\willbj0b\github\PPA-MOO\mcpmod.lst
+7=C:\Users\willbj0b\github\KOMNRS\mcpmod.gms
 
 [OPENWINDOW_1]
 FILE0=C:\Users\willbj0b\github\PPA-MOO\run.gms
 FILE1=C:\Users\willbj0b\github\PPA-MOO\run.lst
-FILE2=C:\Users\willbj0b\github\PPA-MOO\zz.gdx
-FILE3=C:\Users\willbj0b\github\PPA-MOO\run.lst
+FILE2=C:\Users\willbj0b\github\PPA-MOO\weights.gms
+FILE3=C:\Users\willbj0b\github\PPA-MOO\zz.gdx
+FILE4=C:\Users\willbj0b\github\PPA-MOO\run.lst
 MAXIM=0
-TOP=-7
-LEFT=20
+TOP=1
+LEFT=18
 HEIGHT=521
-WIDTH=1273
+WIDTH=1275
