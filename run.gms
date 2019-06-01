@@ -12,7 +12,7 @@ $include distributions.gms
 
 $include PPA_model.gms
 
-scalar E_mark_up markup for the energy price /1.07/
+scalar P_mark_up markup for the energy price /1.07/
        delta_mark_up markup for the capacity price /1.07/
 ;
 
@@ -39,7 +39,7 @@ s("high") = yes;
 * //////////////////////////////////////////////////////////////////
 * scenario with  high fixed cost/capacity price, and low marignal cost/ energy price
 ci = 10.67;
-c0 = ci*E_mark_up;
+c0 = ci*P_mark_up;
 
 fi = 72.9;
 f0 = 188;
@@ -59,7 +59,7 @@ s("low") = yes;
 * We reduce investment cost under 100% local content to 30% of the value calaculted above.
 * The targeted capital/fixed cost at 20% local content
 ci = 28.2;
-c0 = ci*E_mark_up;
+c0 = ci*P_mark_up;
 f0=f0*0.5;
 
 $include energy_capacity_prices.gms
@@ -76,11 +76,11 @@ s("volatility") = yes;
 * and discounted capital cost.
 * We reduce investment cost under 100% local content to 30% of the value calaculted above.
 * The targeted capital/fixed cost at 20% local content
-E_alpha = 2;
-E_beta = 2;
+P_alpha = 2;
+P_beta = 2;
 
 
-*E_mark_up = 1.0126;
+*P_mark_up = 1.0126;
 $include energy_capacity_prices.gms
 Solve PPA using EMP maximizing z_buyer ;
 $include weights.gms

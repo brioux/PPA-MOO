@@ -13,9 +13,9 @@ parameters
             l0           percentage of local content/0/
             l_min,l_max,l_avg,l_std,l_alpha,l_beta
 
-            E0           the target price of electricity ($ per Mwh) /16/
-            E_bar        The maximum price of electricity USD per MWh /100/
-            E_min,E_max,E_avg,E_std,E_alpha,E_beta
+            P0           the target price of electricity ($ per Mwh) /16/
+            P_bar        The maximum price of electricity USD per MWh /100/
+            P_min,P_max,P_avg,P_std,P_alpha,P_beta
 
             delta0       the target capacity price ($ per KW)       /145/
             delta_bar    The maximum price of capacity USD per KW /150/
@@ -51,13 +51,7 @@ parameters
             fi           annualized capital cost of equipment USD per KW (CCGT)/188/
             fl           domestic capital cost of equipment USD per KW (CCGT) /188/
             f0           reported captial cost
-            Shadow_E(t)
-            Shadow_delta
-            Shadow_l
-            Shadow_h
-            Shadow_y
-            Shadow_Sum
-            Shadow_theta
+
             CS consumer surplus
             Pi
             cost_ppa

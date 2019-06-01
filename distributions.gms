@@ -34,5 +34,5 @@ l_std = std(l_min,l_max,l_alpha,l_beta);
 delta_alpha = 4;
 delta_beta = 4;
 
-E_alpha = 4;
-E_beta = 4;
+P_alpha = 4;
+P_beta = 4;

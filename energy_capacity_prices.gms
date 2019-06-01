@@ -24,16 +24,16 @@ delta_max = fixed_cost*1.1;
 delta_avg = mean(delta_min,delta_max,delta_alpha,delta_beta);
 delta_std = std(delta_min,delta_max,delta_alpha,delta_beta);
 
-E0 = marginal_cost*E_mark_up;
-E_min = marginal_cost*0.9;
-E_max = marginal_cost*1.1;
+P0 = marginal_cost*P_mark_up;
+P_min = marginal_cost*0.9;
+P_max = marginal_cost*1.1;
 *marginal_cost+fixed_cost/(theta0 - eps_L*l0 +eps_h*h0)/8.76;
-E_avg = mean(E_min,E_max,E_alpha,E_beta);
-E_std = std(E_min,E_max,E_alpha,E_beta);
+P_avg = mean(P_min,P_max,P_alpha,P_beta);
+P_std = std(P_min,P_max,P_alpha,P_beta);
 
 k0=1;
 K0=K0*(1+0.2$(delta0>0));
 g = (0.2*K0/delta_avg)$(delta0>0)+0$(delta0=0);
 a = (theta0 - eps_L*l0 +eps_h*h0)*(K0-g*delta0)*8.760 ;
 a = 2*a;
-b = a/E_avg;
+b = a/P_avg;
