@@ -1,3 +1,4 @@
+$ontext
           Shadow_E(t) = EQ_E_s.m(t);
           Shadow_delta = EQ_delta_s.m ;
           Shadow_l = EQ_l_s.m ;
@@ -7,7 +8,7 @@
 Shadow_Sum = sum(t,Shadow_E(t))/card(t) + Shadow_delta + Shadow_l +Shadow_h + Shadow_y
 *+Shadow_theta
 ;
-$ontext
+
 w_E.l(t)=  Shadow_E(t)/Shadow_Sum ;
 w_delta.l= Shadow_delta/Shadow_Sum ;
 w_l.l = Shadow_l/Shadow_Sum;
@@ -16,7 +17,7 @@ w_y.l = Shadow_y/Shadow_Sum;
 $offtext
 
 
-parameter results, report, profit;
+parameter results, report;
 
 results(s,'energy','target') = E0;
 results(s,'energy','value') = E.l('1');
@@ -56,36 +57,29 @@ results(s,'years of experience','std dev') = y_std;
 *results(s,'years of experience','shadow_w') = Shadow_y/Shadow_Sum;
 *$ontext
 
-Q.l(t) = a-b*E.l(t);
-K.l = K0-g*delta.l;
-c.l(t) = ci*(1-l.l) + l.l*cl;
-f.l(t) = fi*(1-l.l) + l.l*fl+y.l*tau_f+v*h.l ;
-theta.l(t) = theta0 - eps_L*l.l +eps_h*h.l;
 
-phi.l(t) =  +w_E.l(t)*(E_avg-E.l(t))/E_std
-            +w_delta.l*(delta_avg-delta.l)/delta_std
-            -w_h.l*(h_avg-h.l)/h_std
-            -w_l.l*(l_avg-l.l)/l_std
-            -w_y.l*(y_avg-y.l)/y_std
-;
-
-rho.l(t) = 1/(1+exp(-phi.l(t)));
-
-cost_ppa = sum(t,Q.l(t)*E.l(t))+delta.l*K.l;
-cost_gen = sum(t,Q.l(t)*c.l(t))+K.l*sum(t,f.l(t));
-
-report(s,"phi") = sum(t,phi.l(t));
-report(s,"rh0") = sum(t,rho.l(t));
-report(s,"w_p") = w_E.l;
+report(s,"phi") = z_buyer.l;
+report(s,"rh0") = RHO(report(s,"phi"));
+report(s,"w_p") = sum(t,w_E.l(t));
 report(s,"w_delta") = w_delta.l;
 report(s,"w_h") = w_h.l;
 report(s,"w_l") = w_l.l;
 report(s,"w_y") = w_y.l;
-report(s,"PPA cost") = cost_ppa;
-report(s,"Generator cost") = cost_gen;
-report(s,"profit") = sum(t,(E.l(t)- c.l(t))*Q.l(t) + (delta.l - f.l(t))*K.l);
+report(s,"PPA cost") = sum(t,Q(E.l(t))*E.l(t))+delta.l*K(delta.l);
+report(s,"Generator cost") = sum(t,Q(E.l(t)))*c(l.l)+K(delta.l)*sum(t,f(l.l,y.l,h.l));
+report(s,"profit") = z.l;
+*profit(E.l('1'),delta.l,l.l,y.l,h.l);
+report(s,"Production") = Q(E.l('1'));
+report(s,"Capacity") = K(delta.l);
+report(s,"Theta") = theta(l.l,h.l);
+report(s,"Energy price") = E.l('1');
+report(s,"Capacity price") = delta.l;
+report(s,"a") = a;
+report(s,"b") = b;
+report(s,"g") = g;
+report(s,"K0") = k0;
+report(s,"marginal cost") = c(l.l);
+report(s,"fixed cost") = f(l.l,y.l,h.l);
 *CS =sum(t,( (E_bar - E.l(t))*Q.l(t) + (delta_bar - delta.l)*K.l )/(1+i)**ord(t) );
 ;
-
-Display fl,fi, cost_ppa, cost_gen;
 *$offtext
