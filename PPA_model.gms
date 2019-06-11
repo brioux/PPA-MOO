@@ -41,7 +41,7 @@ $macro c(l)      (ci*(1-l)+l*cl)
 $macro f(l,y,h)      (fi*(1-l)+l*fl+y*tau_f+mu*h)
 * compute generation in MWh by multiplying  capacity (Kw) by 8760 hours divided by 1000
 * see EQ_caplim below
-$macro theta(l,h)  (theta0-eps_L*l+eps_h*h)*8.76 
+$macro theta(l,h)  ((theta0-eps_L*l+eps_h*h)*8.76)
 $macro Q(P) (a-b*P)
 $macro K(delta) (K0-g*delta)
 
