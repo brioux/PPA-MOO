@@ -11,29 +11,39 @@ mu$(h0>0) = (fi*(1-l0) + l0*fl)*mu/h0;
 *1% cost slippage for each year of experience.
 tau_f$(y0>0) = (fi*(1-l0) + l0*fl)*tau_f/y0;
 
-
-marginal_cost = (ci*(1-l0) + l0*cl);
-fixed_cost = fi*(1-l0) + l0*fl+mu*h0+tau_f*y0;
-display fixed_cost;
+marginal_cost = c(l0);
+fixed_cost = f(l0,y0,h0);
 
 delta0 = fixed_cost*delta_mark_up;
-delta_min = fixed_cost*0.9;
-delta_max = fixed_cost*1.1;
+delta_min = fixed_cost*1;
+delta_max = fixed_cost*1.5;
 *fixed_cost+marginal_cost*(theta0 - eps_L*l0 +eps_h*h0)*8.76;
 
 delta_avg = mean(delta_min,delta_max,delta_alpha,delta_beta);
 delta_std = std(delta_min,delta_max,delta_alpha,delta_beta);
 
 P0 = marginal_cost*P_mark_up;
-P_min = marginal_cost*0.9;
-P_max = marginal_cost*1.1;
+P_min = marginal_cost*1;
+P_max = marginal_cost*1.5;
 *marginal_cost+fixed_cost/(theta0 - eps_L*l0 +eps_h*h0)/8.76;
 P_avg = mean(P_min,P_max,P_alpha,P_beta);
 P_std = std(P_min,P_max,P_alpha,P_beta);
 
+
 k0=1;
-K0=K0*(1+0.2$(delta0>0));
-g = (0.2*K0/delta_avg)$(delta0>0)+0$(delta0=0);
-a = (theta0 - eps_L*l0 +eps_h*h0)*(K0-g*delta0)*8.760 ;
+K0=K0*(1+0.2$(delta_avg>0));
+g = (0.2*K0/delta_avg)$(delta_avg>0)+0$(delta_avg=0);
+
+a = theta(l.l,h.l)*K(delta0);
 a = 2*a;
-b = a/P_avg;
+b = a/P0;
+
+P.l(t) = P_opt(l.l,h.l);
+*P.up(t) = P_opt(l.l,h.l);
+delta.l = delta_opt(l.l,h.l);
+
+
+
+
+
+

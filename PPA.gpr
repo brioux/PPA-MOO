@@ -976,10 +976,6 @@ Order=
 Decim=7
 PlaneRownr=-1
 
-[RP:PPA_MODEL]
-1=gdx=zz
-2=
-
 [GDXDISP: c0 Par 0]
 PlaneDim=0
 RowDim=0
@@ -1760,29 +1756,116 @@ Order=1
 Decim=7
 PlaneRownr=-1
 
+[GDXDISP: ci Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[RP:PPA_MODEL]
+1=gdx=zz
+2=
+
+[GDXDISP: w_P Var 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: EQ_opt_capacity Equ 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: EQ_opt_delta Equ 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: EQ_opt_p Equ 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: EQ_P_s Equ 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: EQ_q_pos Equ 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: P Var 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: P0 Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: P_std Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
 [RP:ENERGY_CAPACITY_PRICES]
+1=
+
+[RP:REPORT]
 1=
 
 [RP:RUN]
 1=gdx=zz
 
 [MRUFILES]
-1=C:\Users\willbj0b\github\PPA-MOO\run.log
-2=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_Saudi_intermediate.gdx
-3=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_Saudi.gdx
-4=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_OPEC_shale_intermediate.gdx
-5=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_OPEC.gdx
-6=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\competitive_intermediate.gdx
-7=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\competitive_elasticity\shale_cap_eps_0.50.gdx
-8=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\competitive_elasticity\shale_cap_eps_0.1.gdx
+1=C:\Users\willbj0b\github\PPA-MOO\report.gms
+2=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
+3=C:\Users\willbj0b\github\PPA-MOO\PPA_model.gms
+4=C:\Users\willbj0b\github\PPA-MOO\run.log
+5=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_Saudi_intermediate.gdx
+6=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_Saudi.gdx
+7=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_OPEC_shale_intermediate.gdx
+8=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_OPEC.gdx
 
 [OPENWINDOW_1]
-FILE0=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
-FILE1=C:\Users\willbj0b\github\PPA-MOO\run.gms
-FILE2=C:\Users\willbj0b\github\PPA-MOO\run.lst
+FILE0=C:\Users\willbj0b\github\PPA-MOO\run.gms
+FILE1=C:\Users\willbj0b\github\PPA-MOO\run.lst
+FILE2=C:\Users\willbj0b\github\PPA-MOO\zz.gdx
 FILE3=C:\Users\willbj0b\github\PPA-MOO\run.lst
 MAXIM=0
-TOP=26
-LEFT=26
-HEIGHT=537
+TOP=-14
+LEFT=-9
+HEIGHT=524
 WIDTH=1094

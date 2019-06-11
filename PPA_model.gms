@@ -1,15 +1,18 @@
-option nlp=pathnlp;
+option nlp=pathnlp
+;
 
-Variables z,z_buyer,P(t),delta,l,h,y ;
+Variables z,z_buyer,P(t),delta,l,h,y
+      zeta(t)              dual variable on the capacity constraint 
+;
 Positive variables
-      P,delta,l,
-      h,y,
+      P,delta,
+      l,h,y,
       w_P(t)            weight on energy price target
       w_delta           weight on capacity price target
       w_l               weight on local content target
       w_h               weight on financial warranties
       w_y               weight on years of experience
-      w_total
+      zeta(t)           dual variable on the capacity constraint      
 ;
 
 Equations
@@ -17,15 +20,11 @@ EQ_profit         "generator's profit"
 EQ_caplim(t)      generators capacity limit constraint
 
 EQ_buyer
-EQ_P_s(t)
-EQ_delta_s
-EQ_l_s
-eq_5_5(t)
-Eq_5_6(t)
-EQ_h_s
-EQ_y_s
 EQ_norm
-EQ_q_pos(t)  generator production shold be non-negative
+
+EQ_opt_delta(t)
+EQ_opt_p(t)
+EQ_opt_capacity(t)
 ;
 
 $macro  PHI(t)    w_P(t)*(P_avg-P(t))/P_std \
@@ -34,17 +33,25 @@ $macro  PHI(t)    w_P(t)*(P_avg-P(t))/P_std \
                 - w_l*(l_avg-l)/l_std \
                 - w_y*(y_avg-y)/y_std
 
-$macro  RHO(x) 1/(1+exp(-(x)))
+$macro RHO(x) 1/(1+exp(-(x)))
 
 $macro profit(t) ((P(t) - c(l))*Q(P(t))+ (delta-f(l,y,h)*K(delta) ))
 
 $macro c(l)      (ci*(1-l)+l*cl)
 $macro f(l,y,h)      (fi*(1-l)+l*fl+y*tau_f+mu*h)
-$macro theta(l,h)  (theta0-eps_L*l+eps_h*h)
-$macro Q(P)   (a-b*P)
-$macro K(delta)   (K0-g*delta)
+* compute generation in MWh by multiplying  capacity (Kw) by 8760 hours divided by 1000
+* see EQ_caplim below
+$macro theta(l,h)  (theta0-eps_L*l+eps_h*h)*8.76 
+$macro Q(P) (a-b*P)
+$macro K(delta) (K0-g*delta)
 
 
+$macro delta_opt(l,h) ((Q(P_avg)-theta(l,h)*K0)*delta_std+b*delta_avg*P_std)/(b*P_std-g*theta(l,h)*delta_std)
+$macro P_opt(l,h) (-g*theta(l,h)*P_avg*delta_std+(a-K0*theta(l,h)+g*theta(l,h)*delta_avg)*P_std)/(b*P_std-g*theta(l,h)*delta_std)
+$macro nu(l,h) (a-b*P_avg-K0*theta(l,h)+g*theta(l,h)*delta_avg)/(b*P_std-g*theta(l,h)*delta_std)
+$macro h_opt h_avg-h_std*(a-b*P_avg-theta0*K0+theta0*g*delta_avg)/(b*P_std-g*theta0*delta_std)
+$macro l_opt l_avg-l_std*(a-b*P_avg-theta0*K0+theta0*g*delta_avg)/(b*P_std-g*theta0*delta_std)
+$macro y_opt y_avg-y_std*(a-b*P_avg-theta0*K0+theta0*g*delta_avg)/(b*P_std-g*theta0*delta_std)
 
 EQ_buyer..      z_buyer =e= sum(t,PHI(t))
 ;
@@ -55,17 +62,21 @@ EQ_norm(t).. w_P(t)+w_delta+w_y+w_l+w_h =e=1
 EQ_profit.. z =e= sum(t,RHO(PHI(t))*profit(t))
 ;
 
-EQ_caplim(t)..   Q(P(t))=l= theta(l,h)*(K0-g*delta)*8.760
+EQ_caplim(t)..   Q(P(t)) =l=  theta(l,h)*k(delta)
 ;
 
-EQ_q_pos(t).. Q(P(t)) =g= 0;
+EQ_opt_delta(t).. (k0 - 2*delta*g + g*f(l,y,h))/(1+exp(-PHI(t)))
+        -w_delta*exp(-PHI(t))*profit(t)/(delta_std*(1+exp(-PHI(t)))**2)
+        -g*theta(l,h)*zeta(t) =g= 0
+;
 
+EQ_opt_p(t).. (a+b*c(l)-2*b*P(t))/(1+exp(-PHI(t)))
+  -w_P(t)*exp(-PHI(t))*profit(t)/(P_std*(1+exp(-PHI(t)))**2)
+  +b*zeta(t) =g= 0
+;
 
-EQ_P_s(t)..     P(t)=l= P0   ;
-EQ_delta_s..     delta =l= delta0;
-EQ_l_s..         l =g= l0;
-EQ_h_s..         h=g= h0;
-EQ_y_s..         y =g= y0;
+EQ_opt_capacity(t).. Q(P(t)) - theta(l,h)*K(delta) =e= 0
+;
 
 l.up = 1.0;
 h.up = 1.0;
@@ -73,40 +84,30 @@ h.up = 1.0;
 
 Model buyer /
 EQ_buyer,
-*EQ_P_s,
-*EQ_delta_s,
-*EQ_l_s,
-*EQ_h_s,
-*EQ_y_s,
-EQ_norm,
+EQ_norm
 /;
+
+* below is the buyers problem with the generators optimality conditions
+Model buyer_gen_opt  /
+buyer,
+EQ_caplim,
+EQ_opt_delta,
+EQ_opt_p,
+*EQ_opt_capacity
+/;
+
 
 model generator /
 EQ_caplim,
-EQ_profit,
-*EQ_q_pos
+EQ_profit
 /
 
 model PPA /buyer generator/;
 
-PPA.optfile=1;
+*PPA.optfile=1;
 PPA.savePoint=2;
 
-file myinfo /'%emp.info%'/;
-put myinfo 'bilevel w_P w_delta w_h w_l w_y';
-put 'max z P delta h l y ';
-put 'EQ_profit EQ_caplim'
-$ontext
-put 'EQ_P_s EQ_delta_s EQ_h_s EQ_y_s EQ_l_s';
-put 'dualvar w_P EQ_P_s ';
-put 'dualvar w_delta EQ_delta_s ';
-put 'dualvar w_h EQ_h_s ';
-put 'dualvar w_y EQ_y_s ';
-put 'dualvar w_l EQ_l_s ';
-$offtext
 
-*rho phi theta K Q c f
-putclose / myinfo;
 
 
 
