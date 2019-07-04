@@ -46,10 +46,10 @@ $include energy_capacity_prices.gms
 * setup bilevel problem using EMP
 file myinfo /'%emp.info%'/;
 put myinfo 'bilevel w_P w_delta w_h w_l w_y';
-put 'max z P delta h l y ';
-put 'EQ_profit EQ_caplim'
+put 'max z * EQ_profit EQ_caplim';
 putclose / myinfo;
 
+PPA.optfile=1;
 
 Solve PPA using EMP maximizing z_buyer ;
 $ontext

@@ -24,9 +24,8 @@ parameters
 
             K0           the installed capacity  GW /3.93/
 
-            theta0        /0.7 /
-            theta_bar     /0.6 /
-            theta_min,theta_max,theta_avg,theta_std,theta_alpha,theta_beta
+            theta0        /0.8 /
+
 
             y0           minimum years of experience /0/
             y_bar        the targeted number of years of experience/10/

@@ -1,0 +1,68 @@
+* written by GAMS/JAMS at 07/04/19 14:14:56
+
+********************************************************************************
+ Contents
+ 1 Content of EMP Information File
+ 2 Processed EMP Information
+ 3 Dictionary
+  3.1 Constraints
+  3.2 Variables
+********************************************************************************
+
+
+ 1 Content of EMP Information File
+ ---------------------------------
+
+     1:bilevel w_P w_delta w_h w_l w_y max z * EQ_profit EQ_caplim
+
+
+ 2 Processed EMP Information
+ ---------------------------
+
+   Number of followers specified = 1
+
+   Leader
+      controls variables
+      objvar,x8,x9,x10,x11,x12
+      controls equations
+      e1,e2
+
+   Follower 1 maximizes objective variable x1 {reformulated}
+      controls variables
+      x3,x4,x5,x6,x7
+      controls equations
+      e3,e4
+
+
+ 3 Dictionary
+ ------------
+  3.1 Constraints
+  ---------------
+
+                  e1  EQ_buyer
+                  e2  EQ_norm(1)
+                  e3  EQ_caplim(1)
+      {reformulated}  EQ_profit
+              dL_dx3  {new}
+              dL_dx4  {new}
+              dL_dx5  {new}
+              dL_dx6  {new}
+              dL_dx7  {new}
+
+
+  3.2 Variables
+ --------------
+
+      {reformulated}  z
+              objvar  z_buyer
+                  x3  P(1)
+                  x4  delta
+                  x5  l
+                  x6  h
+                  x7  y
+                  x8  w_P(1)
+                  x9  w_delta
+                 x10  w_l
+                 x11  w_h
+                 x12  w_y
+                  u3  {new}

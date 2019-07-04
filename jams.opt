@@ -1,6 +1,2 @@
-*KeepObj
-*FileName=build\mcpmod.gms
-SubSolver=path
-SubSolverOpt=1
+filename=mcpmod.gms
 Dict=dict.txt
-*Terminate=1

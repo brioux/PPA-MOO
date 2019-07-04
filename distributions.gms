@@ -1,11 +1,3 @@
-theta0 = 0.7;
-theta_min = 0.6;
-theta_max = 0.85;
-theta_alpha = 5;
-theta_beta = 1;
-theta_avg = mean(theta_min,theta_max,theta_alpha,theta_beta);
-theta_std = std(theta_min,theta_max,theta_alpha,theta_beta);
-
 y0 = 5;
 y_min = 2;
 y_max = 10;

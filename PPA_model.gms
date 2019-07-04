@@ -27,18 +27,18 @@ EQ_opt_p(t)
 EQ_opt_capacity(t)
 ;
 
-$macro  PHI(t)    w_P(t)*(P_avg-P(t))/P_std \
+$macro  PHI(t)    (  w_P(t)*(P_avg-P(t))/P_std \
                 + w_delta*(delta_avg-delta)/delta_std \
                 - w_h*(h_avg-h)/h_std \
                 - w_l*(l_avg-l)/l_std \
-                - w_y*(y_avg-y)/y_std
+                - w_y*(y_avg-y)/y_std  )
 
 $macro RHO(x) 1/(1+exp(-(x)))
 
 $macro profit(t) ((P(t) - c(l))*Q(P(t))+ (delta-f(l,y,h)*K(delta) ))
 
-$macro c(l)      (ci*(1-l)+l*cl)
-$macro f(l,y,h)      (fi*(1-l)+l*fl+y*tau_f+mu*h)
+$macro c(l) (ci*(1-l)+l*cl)
+$macro f(l,y,h) (fi*(1-l)+l*fl+y*tau_f+mu*h)
 * compute generation in MWh by multiplying  capacity (Kw) by 8760 hours divided by 1000
 * see EQ_caplim below
 $macro theta(l,h)  ((theta0-eps_L*l+eps_h*h)*8.76)
@@ -59,10 +59,11 @@ EQ_buyer..      z_buyer =e= sum(t,PHI(t))
 EQ_norm(t).. w_P(t)+w_delta+w_y+w_l+w_h =e=1
 ;
 
+
 EQ_profit.. z =e= sum(t,RHO(PHI(t))*profit(t))
 ;
 
-EQ_caplim(t)..   Q(P(t)) =l=  theta(l,h)*k(delta)
+EQ_caplim(t)..   Q(P(t)) =e=  theta(l,h)*k(delta)
 ;
 
 EQ_opt_delta(t).. (k0 - 2*delta*g + g*f(l,y,h))/(1+exp(-PHI(t)))

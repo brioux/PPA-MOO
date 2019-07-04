@@ -29,21 +29,28 @@ P_max = marginal_cost*1.5;
 P_avg = mean(P_min,P_max,P_alpha,P_beta);
 P_std = std(P_min,P_max,P_alpha,P_beta);
 
+P_avg = 12;
+P_std = 0.12;
 
-k0=1;
-K0=K0*(1+0.2$(delta_avg>0));
-g = (0.2*K0/delta_avg)$(delta_avg>0)+0$(delta_avg=0);
+delta_avg = 250;
+delta_std = 25;
+
+K0=1;
+g = (0.2*K0/delta0)$(delta0>0);
 
 a = theta(l.l,h.l)*K(delta0);
+b = 1.1*a/P0;
 a = 2*a;
-b = a/P0;
+
 
 P.l(t) = P_opt(l.l,h.l);
-*P.up(t) = P_opt(l.l,h.l);
 delta.l = delta_opt(l.l,h.l);
+w_p.lo(t) = 0.01;
+w_delta.lo = 0.01;
 
-
-
+h.l = h_avg;
+l.l = l_avg;
+y.l = y_avg;
 
 
 
