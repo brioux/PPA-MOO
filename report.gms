@@ -59,7 +59,7 @@ report(s,"g") = g;
 report(s,"K0") = k0;
 report(s,"marginal cost") = c(l.l);
 report(s,"fixed cost") = f(l.l,y.l,h.l);
-report(s,'nu') = nu(l.l,h.l);
+*report(s,'nu') = nu(l.l,h.l);
 *CS =sum(t,( (P_bar - P.l(t))*Q.l(t) + (delta_bar - delta.l)*K.l )/(1+i)**ord(t) );
 ;
 *$offtext

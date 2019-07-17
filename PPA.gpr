@@ -142,9 +142,6 @@ PlaneRownr=-1
 [RP:20170228_PPA MODEL]
 1=
 
-[RP:INTEGRATED EMP]
-1=
-
 [GDXDISP: a Par 0]
 PlaneDim=0
 RowDim=0
@@ -189,9 +186,6 @@ PlaneRownr=-1
 [RP:PPA MODEL]
 1=gdx=zz
 2=
-
-[RP:KEM_EMP_SIMPLE]
-1=
 
 [RP:MCPMOD]
 1=
@@ -1847,20 +1841,58 @@ Order=
 Decim=7
 PlaneRownr=-1
 
+[RP:ENERGY_CAPACITY_PRICES]
+1=
+
+[GDXDISP: P_min Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: P_max Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: P_mark_up Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: P_beta Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
 [RP:PPA_MODEL]
 1=gdx=zz
 2=
-
-[RP:ENERGY_CAPACITY_PRICES]
-1=
 
 [RP:RUN]
 1=gdx=z
 2=gdx=zz
 
+[RP:KEM_EMP_SIMPLE]
+1=
+
+[RP:INTEGRATED EMP]
+1=
+
 [MRUFILES]
-1=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
-2=C:\Users\willbj0b\github\PPA-MOO\PPA_model.gms
+1=C:\Users\willbj0b\github\PPA-MOO\PPA_model.gms
+2=C:\Users\willbj0b\github\PPA-MOO\energy_capacity_prices.gms
 3=C:\Users\willbj0b\github\PPA-MOO\zz.gdx
 4=C:\Users\willbj0b\github\PPA-MOO\report.gms
 5=C:\Users\willbj0b\github\PPA-MOO\run.log
@@ -1868,12 +1900,15 @@ PlaneRownr=-1
 7=D:\Dropbox (KAPSARC)\Market with no residual supplier\Results\results_05272019\ref_Saudi.gdx
 
 [OPENWINDOW_1]
-FILE0=C:\Users\willbj0b\github\PPA-MOO\run.gms
-FILE1=C:\Users\willbj0b\github\PPA-MOO\run.lst
-FILE2=C:\Users\willbj0b\github\PPA-MOO\z.gdx
-FILE3=C:\Users\willbj0b\github\PPA-MOO\run.lst
+FILE0=C:\Users\willbj0b\github\PPA-MOO\jams.opt
+FILE1=C:\Users\willbj0b\github\PPA-MOO\run.gms
+FILE2=C:\Users\willbj0b\github\PPA-MOO\run.lst
+FILE3=C:\Users\willbj0b\github\PPA-MOO\z.gdx
+FILE4=D:\Dropbox (KAPSARC)\ES- KEM\KEM_EMP\Management\Integrated EMP.GMS
+FILE5=D:\Dropbox (KAPSARC)\ES- KEM\KEM_EMP\Management\KEM_EMP_simple.gms
+FILE6=C:\Users\willbj0b\github\PPA-MOO\jams.opt
 MAXIM=0
-TOP=52
-LEFT=285
-HEIGHT=648
+TOP=43
+LEFT=80
+HEIGHT=496
 WIDTH=1094

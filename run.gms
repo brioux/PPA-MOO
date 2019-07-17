@@ -32,16 +32,19 @@ c0 = ci*P_mark_up;
 fi = 72.9;
 f0 = 188;
 
-* fix other generator variables to targeted values
+* fix other generator variables to some target
 h.fx=h0;
 l.fx=l0;
 y.fx=y0;
-* fix buyer weights
+* fix corr buyer weights
 w_h.fx=0;
 w_l.fx=0;
 w_y.fx=0;
 
 $include energy_capacity_prices.gms
+
+
+
 
 * setup bilevel problem using EMP
 file myinfo /'%emp.info%'/;

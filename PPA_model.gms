@@ -2,7 +2,7 @@ option nlp=pathnlp
 ;
 
 Variables z,z_buyer,P(t),delta,l,h,y
-      zeta(t)              dual variable on the capacity constraint 
+      zeta(t)              dual variable on the capacity constraint
 ;
 Positive variables
       P,delta,
@@ -12,7 +12,7 @@ Positive variables
       w_l               weight on local content target
       w_h               weight on financial warranties
       w_y               weight on years of experience
-      zeta(t)           dual variable on the capacity constraint      
+      zeta(t)           dual variable on the capacity constraint
 ;
 
 Equations
@@ -45,13 +45,15 @@ $macro theta(l,h)  ((theta0-eps_L*l+eps_h*h)*8.76)
 $macro Q(P) (a-b*P)
 $macro K(delta) (K0-g*delta)
 
-
 $macro delta_opt(l,h) ((Q(P_avg)-theta(l,h)*K0)*delta_std+b*delta_avg*P_std)/(b*P_std-g*theta(l,h)*delta_std)
 $macro P_opt(l,h) (-g*theta(l,h)*P_avg*delta_std+(a-K0*theta(l,h)+g*theta(l,h)*delta_avg)*P_std)/(b*P_std-g*theta(l,h)*delta_std)
+
+$ontext
 $macro nu(l,h) (a-b*P_avg-K0*theta(l,h)+g*theta(l,h)*delta_avg)/(b*P_std-g*theta(l,h)*delta_std)
 $macro h_opt h_avg-h_std*(a-b*P_avg-theta0*K0+theta0*g*delta_avg)/(b*P_std-g*theta0*delta_std)
 $macro l_opt l_avg-l_std*(a-b*P_avg-theta0*K0+theta0*g*delta_avg)/(b*P_std-g*theta0*delta_std)
 $macro y_opt y_avg-y_std*(a-b*P_avg-theta0*K0+theta0*g*delta_avg)/(b*P_std-g*theta0*delta_std)
+$offtext
 
 EQ_buyer..      z_buyer =e= sum(t,PHI(t))
 ;
@@ -63,9 +65,10 @@ EQ_norm(t).. w_P(t)+w_delta+w_y+w_l+w_h =e=1
 EQ_profit.. z =e= sum(t,RHO(PHI(t))*profit(t))
 ;
 
-EQ_caplim(t)..   Q(P(t)) =e=  theta(l,h)*k(delta)
+EQ_caplim(t)..   theta(l,h)*k(delta)-Q(P(t)) =e=  0
 ;
 
+$ontext
 EQ_opt_delta(t).. (k0 - 2*delta*g + g*f(l,y,h))/(1+exp(-PHI(t)))
         -w_delta*exp(-PHI(t))*profit(t)/(delta_std*(1+exp(-PHI(t)))**2)
         -g*theta(l,h)*zeta(t) =g= 0
@@ -78,6 +81,7 @@ EQ_opt_p(t).. (a+b*c(l)-2*b*P(t))/(1+exp(-PHI(t)))
 
 EQ_opt_capacity(t).. Q(P(t)) - theta(l,h)*K(delta) =e= 0
 ;
+$offtext
 
 l.up = 1.0;
 h.up = 1.0;
@@ -105,7 +109,7 @@ EQ_profit
 
 model PPA /buyer generator/;
 
-*PPA.optfile=1;
+PPA.optfile=1;
 PPA.savePoint=2;
 
 
