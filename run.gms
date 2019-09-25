@@ -4,46 +4,63 @@ $ontext
       Add open source copyright protection agreement
 $offtext
 
-* mean and standard deviation for a beta distribution with max min and paramers aa, bb
-$macro mean(xmin,xmax,aa,bb) (aa*xmax+bb*xmin)/(aa+bb);
-$macro std(xmin,xmax,aa,bb) (xmax-xmin)*(aa*bb/((aa+bb+1)*(aa+bb)**2))**0.5;
-
 $include parameters.gms
-$include distributions.gms
-
 $include PPA_model.gms
 
-scalar P_mark_up markup for the energy price /1.07/
-       delta_mark_up markup for the capacity price /1.07/
-;
 
+theta0 = 0.7;
+a = 13.255;
+b = 1.083;
+K0 = 1.2;
+g = 0.000928;
+
+P_avg = 12.844;
+P_std = 0.8239;
+delta_avg = 258;
+delta_std = 13.5;
+y_avg = 4.285714;
+y_std = 1.277753;
+h_avg = 0.75;
+h_std = 0.067082;
+l_avg = 0.2;
+l_std = 0.07746;
+
+* local and internatinoal cost parameters
+ci = 5;
+cl = 10;
+fi = 188;
+fl = 250;
+
+* other parameters l,h, and y
+eps_L = 0;
+eps_h = 0;
+mu = 0;
+tau_f = 0;
+
+*$ontext
+* initialize values
+p.l = 6.20;
+delta.l = 149.1522;
+y.l = 14.588;
+l.l = 0.8245;
+h.l = 1.29;
+*$offtext
+
+
+$ontext
 * ////////////////////////////////////
 * the code belwo tis to drop local content,
 * financial strength and years of expeience
 * from the two level problem
-
-s(scenario) = no;
-s("high") = yes;
-* //////////////////////////////////////////////////////////////////
-* scenario with  high fixed cost/capacity price, and low marignal cost/ energy price
-ci = 10.67;
-c0 = ci*P_mark_up;
-
-fi = 72.9;
-f0 = 188;
-
 * fix other generator variables to some target
-h.fx=h0;
-l.fx=l0;
-y.fx=y0;
-* fix corr buyer weights
+h.fx=0.8;
+l.fx=0.3;
+y.fx=5;
+* fix buyer weights
 w_h.fx=0;
 w_l.fx=0;
 w_y.fx=0;
-
-$include energy_capacity_prices.gms
-
-
+$offtext
 
 
 * setup bilevel problem using EMP
@@ -55,57 +72,8 @@ putclose / myinfo;
 PPA.optfile=1;
 
 Solve PPA using EMP maximizing z_buyer ;
-$ontext
-* dual primal relationships for generators optimality conditions
-* this formulation is not correct as it solves a standard MCP not a bilevel problem
-file myinfo /'%emp.info%'/;
-put myinfo 'dualvar zeta EQ_caplim';
-put 'dualequ EQ_opt_delta delta';
-put 'dualequ EQ_opt_p P';
-putclose / myinfo;
-Solve buyer_gen_opt using EMP maximizing z_buyer ;
-$offtext
 
-$include report.gms
-
-$ontext
-s(scenario) = no;
-s("low") = yes;
-
-* //////////////////////////////////////////////////////////////////
-* new scenario with higher marignal production cost (fuel reforms)
-* and discounted capital cost.
-* We reduce investment cost under 100% local content to 30% of the value calaculted above.
-* The targeted capital/fixed cost at 20% local content
-ci = 28.2;
-c0 = ci*P_mark_up;
-f0=f0*0.5;
-
-$include energy_capacity_prices.gms
-
-Solve PPA using EMP maximizing z_buyer;
-*Solve buyer_gen_opt maximizing z_buyer using NLP;
-$include report.gms
-*$offtext
-
-$ontext
-s(scenario) = no;
-s("volatility") = yes;
-
-* //////////////////////////////////////////////////////////////////
-* new scenario with higher marignal production cost (fuel reforms)
-* and discounted capital cost.
-* We reduce investment cost under 100% local content to 30% of the value calaculted above.
-* The targeted capital/fixed cost at 20% local content
-P_alpha = 2;
-P_beta = 2;
-
-
-*P_mark_up = 1.0126;
-$include energy_capacity_prices.gms
-Solve PPA using EMP maximizing z_buyer ;
-$include weights.gms
-$offtext
+*$include report.gms
 
 
 

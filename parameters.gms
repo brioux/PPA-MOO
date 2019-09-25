@@ -1,60 +1,48 @@
 
 
-Sets       j     companies /1*1/
-           t     Time     /1*1/
-           scenario /high,low,volatility/
-           s(scenario)
-           ;
+Sets       
+  j     companies /1*1/
+  t     Time     /1*1/
+;
 parameters
-            a            Intercept of the CDF of the uniform dist/1/
-            b            slope of the CDF of the uniform dist/1/
-            r_max        Highest possible ranking/5/
-            r_min        Lowest possible ranking/1/
-            l0           percentage of local content/0/
-            l_min,l_max,l_avg,l_std,l_alpha,l_beta
+  a            Intercept of the CDF of the uniform dist 
+  b            slope of the CDF of the uniform dist 
+  g           slope on the capacity equation
+  K0           the installed capacity  GW /3.93/
 
-            P0           the target price of electricity ($ per Mwh) /16/
-            P_bar        The maximum price of electricity USD per MWh /100/
-            P_min,P_max,P_avg,P_std,P_alpha,P_beta
+  theta0        /0.7/
 
-            delta0       the target capacity price ($ per KW)       /145/
-            delta_bar    The maximum price of capacity USD per KW /150/
-            delta_min,delta_max,delta_avg,delta_std,delta_alpha,delta_beta
-            g           slope on the capacity equation
+  mu           factor for the increase of project costs due to higher financial strength
+  tau_f        the impact of the number of years of lack of experience on cost slippage
 
-            K0           the installed capacity  GW /3.93/
+  eps_l        /0.1/
+  eps_h        /0.1/
 
-            theta0        /0.8 /
+  i            discount rate   /0.05 /
+
+  ci           International marginal cost $ per Mwh /15/
+  cl           100% local content marginal cost $ per Mwh /15/
+
+  fi           annualized capital cost of equipment USD per KW (CCGT)/188/
+  fl           domestic capital cost of equipment USD per KW (CCGT) /188/
+
+  P_avg
+  P_std
+  delta_avg
+  delta_std
+  y_avg
+  y_std
+  h_avg
+  h_std
+  l_avg
+  l_std
+
+  CS consumer surplus
+  Pi
+  cost_ppa
+  cost_gen
+  fixed_cost
+  marginal_cost
 
 
-            y0           minimum years of experience /0/
-            y_bar        the targeted number of years of experience/10/
-            y_min,y_max,y_avg,y_std,y_alpha,y_beta
-
-            h0           minimum financial strength factor /0/
-            h_min,h_max,h_avg,h_std,h_alpha,h_beta
-
-            mu  factor for the increase of project costs due to higher financial strength
-
-            tau_c        the impact of the number of years of lack of experience on cost slippage
-            tau_f        the impact of the number of years of lack of experience on cost slippage
-
-            eps_l        /0.1/
-            eps_h        /0.1/
-
-            i            discount rate   /0.05 /
-
-            ci           International marginal cost $ per Mwh /15/
-            cl           100% local content marginal cost $ per Mwh /15/
-            c0
-            fi           annualized capital cost of equipment USD per KW (CCGT)/188/
-            fl           domestic capital cost of equipment USD per KW (CCGT) /188/
-            f0           reported captial cost
-
-            CS consumer surplus
-            Pi
-            cost_ppa
-            cost_gen
-            fixed_cost
-            marginal_cost
 ;

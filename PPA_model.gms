@@ -1,33 +1,33 @@
 option nlp=pathnlp
 ;
 
-Variables z,z_buyer,P(t),delta,l,h,y
-      zeta(t)              dual variable on the capacity constraint
+Variables z,z_buyer,P,delta,l,h,y
+      zeta              dual variable on the capacity constraint
 ;
 Positive variables
       P,delta,
       l,h,y,
-      w_P(t)            weight on energy price target
+      w_P              weight on energy price target
       w_delta           weight on capacity price target
       w_l               weight on local content target
       w_h               weight on financial warranties
       w_y               weight on years of experience
-      zeta(t)           dual variable on the capacity constraint
+      zeta           dual variable on the capacity constraint
 ;
 
 Equations
 EQ_profit         "generator's profit"
-EQ_caplim(t)      generators capacity limit constraint
+EQ_caplim      generators capacity limit constraint
 
 EQ_buyer
 EQ_norm
 
-EQ_opt_delta(t)
-EQ_opt_p(t)
-EQ_opt_capacity(t)
+EQ_opt_delta
+EQ_opt_p
+EQ_opt_capacity
 ;
 
-$macro  PHI(t)    (  w_P(t)*(P_avg-P(t))/P_std \
+$macro  PHI    (  w_P*(P_avg-P)/P_std \
                 + w_delta*(delta_avg-delta)/delta_std \
                 - w_h*(h_avg-h)/h_std \
                 - w_l*(l_avg-l)/l_std \
@@ -35,7 +35,7 @@ $macro  PHI(t)    (  w_P(t)*(P_avg-P(t))/P_std \
 
 $macro RHO(x) 1/(1+exp(-(x)))
 
-$macro profit(t) ((P(t) - c(l))*Q(P(t))+ (delta-f(l,y,h)*K(delta) ))
+$macro profit ((P - c(l))*Q(P)+ (delta-f(l,y,h)*K(delta) ))
 
 $macro c(l) (ci*(1-l)+l*cl)
 $macro f(l,y,h) (fi*(1-l)+l*fl+y*tau_f+mu*h)
@@ -55,18 +55,21 @@ $macro l_opt l_avg-l_std*(a-b*P_avg-theta0*K0+theta0*g*delta_avg)/(b*P_std-g*the
 $macro y_opt y_avg-y_std*(a-b*P_avg-theta0*K0+theta0*g*delta_avg)/(b*P_std-g*theta0*delta_std)
 $offtext
 
-EQ_buyer..      z_buyer =e= sum(t,PHI(t))
+EQ_buyer..      z_buyer =e= PHI
 ;
 
-EQ_norm(t).. w_P(t)+w_delta+w_y+w_l+w_h =e=1
+EQ_norm(t).. w_P+w_delta+w_y+w_l+w_h =e=1
 ;
 
 
-EQ_profit.. z =e= sum(t,RHO(PHI(t))*profit(t))
+EQ_profit.. z =e= RHO(PHI)*profit
 ;
 
-EQ_caplim(t)..   theta(l,h)*k(delta)-Q(P(t)) =e=  0
+EQ_caplim..   
+theta(l,h)*k(delta)-Q(P) =e=  0
+*theta0*k(delta)-Q(P(t)) =e=  0
 ;
+
 
 $ontext
 EQ_opt_delta(t).. (k0 - 2*delta*g + g*f(l,y,h))/(1+exp(-PHI(t)))
@@ -83,8 +86,8 @@ EQ_opt_capacity(t).. Q(P(t)) - theta(l,h)*K(delta) =e= 0
 ;
 $offtext
 
-l.up = 1.0;
-h.up = 1.0;
+*l.up = 1.0;
+*h.up = 1.0;
 *y.up = 10;
 
 Model buyer /

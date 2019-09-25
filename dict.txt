@@ -1,4 +1,4 @@
-* written by GAMS/JAMS at 07/17/19 08:55:54
+* written by GAMS/JAMS at 09/25/19 10:17:13
 
 ********************************************************************************
  Contents
@@ -41,7 +41,7 @@
 
                   e1  EQ_buyer
                   e2  EQ_norm(1)
-                  e3  EQ_caplim(1)
+                  e3  EQ_caplim
       {reformulated}  EQ_profit
               dL_dx3  {new}
               dL_dx4  {new}
@@ -55,12 +55,12 @@
 
       {reformulated}  z
               objvar  z_buyer
-                  x3  P(1)
+                  x3  P
                   x4  delta
                   x5  l
                   x6  h
                   x7  y
-                  x8  w_P(1)
+                  x8  w_P
                   x9  w_delta
                  x10  w_l
                  x11  w_h
