@@ -8,9 +8,6 @@ The model is generated using the Extended Mathmatical Programming framework.
 
 Run model from run.gms 
 
-parameters.gms 		includes declares all model coefficeints
-distributinos.gms 	defines the distribution fapplied to the bids or each decision criteria
+parameters.gms 		decleration all model coefficeints
 PPA_model.gms 		provides the model statement, including the EMP code used to generate the bi-level problem
-energy_capacity_prices.gms sets the prices and their distrbutions based using the variable and fixed costs
-weights.gms 		generates the report writer post solve
 
