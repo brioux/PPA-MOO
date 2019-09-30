@@ -1,0 +1,5 @@
+filename=mpec.gms
+Dict=dict.txt
+SubSolverOpt=1
+
+
