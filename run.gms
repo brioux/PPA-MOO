@@ -46,6 +46,36 @@ l.l = 0.8245;
 h.l = 1.29;
 *$offtext
 
+*contrain bid parameters
+*p.up = 6.20;
+*delta.up = 149.1522;
+*y.lo = 14.588;
+*l.lo = 0.8245;
+*h.lo = 1.29;
+
+
+* fix buyer weights
+w_p.fx=0.2;
+w_delta.fx=0.2;
+w_h.fx=0.2;
+w_l.fx=0.2;
+w_y.fx=0.2;
+
+*set lower bound on weights
+*w_p.lo = 0.02;
+*w_delta.lo = 0.02;
+*w_h.lo = 0.02;
+*w_y.lo = 0.02;
+*w_l.lo = 0.02;
+
+
+* upper bound on weights
+w_p.up = 1;
+w_delta.up = 1;
+w_h.up = 1;
+w_y.up = 1;
+w_l.up = 1;
+
 
 $ontext
 * ////////////////////////////////////
@@ -56,10 +86,7 @@ $ontext
 h.fx=0.8;
 l.fx=0.3;
 y.fx=5;
-* fix buyer weights
-w_h.fx=0;
-w_l.fx=0;
-w_y.fx=0;
+
 $offtext
 
 
@@ -68,6 +95,8 @@ file myinfo /'%emp.info%'/;
 put myinfo 'bilevel w_P w_delta w_h w_l w_y';
 put 'max z * EQ_profit EQ_caplim';
 putclose / myinfo;
+
+Option MPEC = nlpec;
 
 PPA.optfile=1;
 

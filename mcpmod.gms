@@ -1,11 +1,11 @@
 ***********************************************
-* written by GAMS/JAMS at 09/25/19 10:17:13
+* written by GAMS/JAMS at 09/30/19 08:59:49
 * for more information use JAMS option "Dict"
 ***********************************************
 
 Variables  objvar,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,u3;
 
-Positive Variables  x3,x4,x5,x6,x7,x8,x9,x10,x11,x12;
+Positive Variables  x3,x4,x5,x6,x7;
 
 Equations  e1,e2,e3,dL_dx3,dL_dx4,dL_dx5,dL_dx6,dL_dx7;
 
@@ -73,12 +73,24 @@ dL_dx7.. (-0.782623871749861*x12*exp(-(1.21373953149654*x8*(12.844 - x3) +
          ))))*((-5 + x3 - 5*x5)*(13.255 - 1.083*x3) + x4 - (188 + 62*x5)*(1.2
           - 0.000928*x4)))/(1) =G= 0;
 
+* set non-default bounds
+x8.lo = 0.2;x8.up = 1;
+x9.lo = 0.2;x9.up = 1;
+x10.lo = 0.2;x10.up = 1;
+x11.lo = 0.2;x11.up = 1;
+x12.lo = 0.2;x12.up = 1;
+
 * set non-default levels
 x3.l = 6.2;
 x4.l = 149.1522;
 x5.l = 0.8245;
 x6.l = 1.29;
 x7.l = 14.588;
+x8.l = 0.2;
+x9.l = 0.2;
+x10.l = 0.2;
+x11.l = 0.2;
+x12.l = 0.2;
 
 Model m / e1,e2,e3.u3,dL_dx3.x3,dL_dx4.x4,dL_dx5.x5,dL_dx6.x6,dL_dx7.x7 /;
 

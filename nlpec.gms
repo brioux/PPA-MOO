@@ -1,4 +1,4 @@
-*  MPEC written by GAMS Convert at 09/25/19 10:17:13
+*  MPEC written by GAMS Convert at 09/30/19 09:05:47
 *  
 *  Equation counts
 *      Total        E        G        L        N        X        C        B
@@ -32,7 +32,7 @@
 
 Variables  x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12;
 
-Positive Variables  x2,x3,x4,x5,x6,x7,x8,x9,x10,x11;
+Positive Variables  x2,x3,x4,x5,x6;
 
 Equations  e1,e2,e3,e4,e5,e6,e7,e8;
 Positive Variable  S4 matches x2;
@@ -122,6 +122,11 @@ Equation CS8 matches x6;
 
 * set non default bounds
 
+x7.lo = 0.2;x7.up = 1;
+x8.lo = 0.2;x8.up = 1;
+x9.lo = 0.2;x9.up = 1;
+x10.lo = 0.2;x10.up = 1;
+x11.lo = 0.2;x11.up = 1;
 
 * touch all variables
 
@@ -131,11 +136,11 @@ x3.l = 149.1522;
 x4.l = 0.8245;
 x5.l = 1.29;
 x6.l = 14.588;
-x7.l = 0;
-x8.l = 0;
-x9.l = 0;
-x10.l = 0;
-x11.l = 0;
+x7.l = 0.2;
+x8.l = 0.2;
+x9.l = 0.2;
+x10.l = 0.2;
+x11.l = 0.2;
 x12.l = 0;
 
 S = -((18.67 - 2.166*x2.l + 5.415*x4.l)/(1 + exp(-(1.21373953149654*x7.l*(
